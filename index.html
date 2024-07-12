@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: white;
+            text-align: center;
+            padding-top: 20px;
+            margin: 0;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        #coin-count {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        #game {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            max-width: 720px;
+            height: 100vh;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+        #rocket {
+            width: 250px;
+            height: 250px;
+            cursor: pointer;
+            margin-top: 150px;
+        }
+        #content {
+            display: none;
+            margin-top: 20px;
+        }
+        .button-container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 720px;
+            margin-top: 20px;
+        }
+        .button-container button {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #666;
+        }
+        #about-content, #quests-content, #stats-content, #upgrades-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>RocketTap</h1>
+    <div id="coin-count">0</div>
+    <div id="game">
+        <img id="rocket" src="img/image-removebg-preview.png" alt="Rocket">
+        <div id="content">
+            <div id="upgrades-content">
+                <h2>Upgrades</h2>
+                <button id="improve-button" onclick="improve()">Improve: 10</button>
+                <button onclick="backToGame()">Back to Game</button>
+            </div>
+            <div id="quests-content">
+                <h2>Quests</h2>
+                <p>Coming soon</p>
+                <button onclick="backToGame()">Back to Game</button>
+            </div>
+            <div id="stats-content">
+                <h2>Stats and Achievements</h2>
+                <p id="achievement-100">Achievement: 100</p>
+                <p id="achievement-1000">Achievement: 1000</p>
+                <p id="achievement-10000">Achievement: 10000</p>
+                <p id="achievement-100000">Achievement: 100000</p>
+                <p id="achievement-1000000">Achievement: 1000000</p>
+                <p id="achievement-10000000">Achievement: 10000000</p>
+                <button onclick="backToGame()">Back to Game</button>
+            </div>
+            <div id="about-content">
+                <h2>About RocketTap</h2>
+                <p>RocketTap is an engaging clicker game where players tap a rocket to earn clicks and coins. The game features.</p>
+                <p>RocketTap is a unique project created for all fans of clicker games. The main goal of the game is to tap on a rocket to earn clicks and coins. Players can enhance their abilities, complete daily tasks, earn rewards, and reach new heights in the game. Join us and start your space adventure with RocketTap!</p>
+                <button onclick="backToGame()">Back to Game</button>
+            </div>
+        </div>
+        <div class="button-container">
+            <button onclick="showContent('upgrades')">Upgrades</button>
+            <button onclick="showContent('quests')">Quests</button>
+            <button onclick="showContent('stats')">Stats</button>
+            <button onclick="showContent('about')">About</button>
+        </div>
+    </div>
+
+    <script>
+        let coinCount = 0;
+        let coinPerClick = 2;
+        let upgradeCost = 10;
+
+        const rocket = document.getElementById('rocket');
+        const coinCountElem = document.getElementById('coin-count');
+        const improveButton = document.getElementById('improve-button');
+        const content = document.getElementById('content');
+        const upgradesContent = document.getElementById('upgrades-content');
+        const questsContent = document.getElementById('quests-content');
+        const statsContent = document.getElementById('stats-content');
+        const aboutContent = document.getElementById('about-content');
+
+        // Загрузка данных из localStorage
+        window.onload = () => {
+            if (localStorage.getItem('coinCount')) {
+                coinCount = parseInt(localStorage.getItem('coinCount'));
+                coinPerClick = parseInt(localStorage.getItem('coinPerClick'));
+                upgradeCost = parseInt(localStorage.getItem('upgradeCost'));
+                improveButton.textContent = `Improve: ${upgradeCost}`;
+                updateBalance();
+                updateAchievements();
+            }
+        };
+
+        // Сохранение данных в localStorage
+        window.onbeforeunload = () => {
+            localStorage.setItem('coinCount', coinCount);
+            localStorage.setItem('coinPerClick', coinPerClick);
+            localStorage.setItem('upgradeCost', upgradeCost);
+        };
+
+        rocket.addEventListener('click', () => {
+            coinCount += coinPerClick;
+            updateBalance();
+            updateAchievements();
+        });
+
+        function improve() {
+            if (coinCount >= upgradeCost) {
+                coinCount -= upgradeCost;
+                coinPerClick += 5;
+                upgradeCost *= 10;
+                improveButton.textContent = `Improve: ${upgradeCost}`;
+                updateBalance();
+            }
+        }
+
+        function updateBalance() {
+            coinCountElem.textContent = coinCount;
+        }
+
+        function updateAchievements() {
+            const achievements = [
+                { id: 'achievement-100', value: 100 },
+                { id: 'achievement-1000', value: 1000 },
+                { id: 'achievement-10000', value: 10000 },
+                { id: 'achievement-100000', value: 100000 },
+                { id: 'achievement-1000000', value: 1000000 },
+                { id: 'achievement-10000000', value: 10000000 }
+            ];
+
+            achievements.forEach(achievement => {
+                const elem = document.getElementById(achievement.id);
+                if (coinCount >= achievement.value) {
+                    elem.textContent = `Achievement: ${achievement.value} ☑️`;
+                }
+            });
+        }
+
+        function showContent(section) {
+            upgradesContent.style.display = 'none';
+            questsContent.style.display = 'none';
+            statsContent.style.display = 'none';
+            aboutContent.style.display = 'none';
+            content.style.display = 'block';
+            document.getElementById(section + '-content').style.display = 'block';
+        }
+
+        function backToGame() {
+            content.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
