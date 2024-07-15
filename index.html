@@ -38,7 +38,7 @@
             width: 150px; /* Уменьшение размера изображения */
             height: 150px;
             cursor: pointer;
-            margin-top: 100px;
+            margin-top: 850px; /* Установите значение 910px - 60px для кнопок и изображения */
             user-select: none; /* Отключить выделение изображения */
         }
         #content {
@@ -51,7 +51,7 @@
             justify-content: center;
             width: 100%;
             max-width: 360px;
-            margin-top: 20px;
+            margin-top: 910px;
         }
         .button-container button {
             margin: 5px;
@@ -145,11 +145,15 @@
             localStorage.setItem('upgradeCost', upgradeCost);
         };
 
-        rocket.addEventListener('click', () => {
+        // Обработчик кликов и touchstart
+        rocket.addEventListener('click', handleClick);
+        rocket.addEventListener('touchstart', handleClick);
+
+        function handleClick() {
             coinCount += coinPerClick;
             updateBalance();
             updateAchievements();
-        });
+        }
 
         function improve() {
             if (coinCount >= upgradeCost) {
