@@ -14,8 +14,8 @@
             height: 100vh;
             background-color: black;
             color: white;
-            overflow: hidden; /* Предотвращает скроллинг */
-            user-select: none; /* Предотвращает выделение элементов */
+            overflow: hidden; /* Prevents scrolling */
+            user-select: none; /* Prevents text selection */
         }
 
         h1 {
@@ -34,7 +34,7 @@
             height: 250px;
             margin-top: 150px;
             cursor: pointer;
-            user-select: none; /* Предотвращает выделение элемента */
+            user-select: none; /* Prevents element selection */
         }
 
         #button-container {
@@ -58,12 +58,12 @@
 <body>
     <h1>RocketTap</h1>
     <div id="click-count">0</div>
-    <img id="rocket" src="img/image-removebg-preview2.png" alt="Rocket">
+    <img id="rocket" src="image-removebg-preview2.png" alt="Rocket">
     <div id="button-container" style="margin-top: 720px;">
-        <button onclick="showUpgrades()">Upgrades</button>
-        <button onclick="showQuests()">Quests</button>
-        <button onclick="showStats()">Stats</button>
-        <button onclick="showAbout()">About</button>
+        <button id="upgradesButton">Upgrades</button>
+        <button id="questsButton">Quests</button>
+        <button id="statsButton">Stats</button>
+        <button id="aboutButton">About</button>
     </div>
     <div id="content"></div>
 
@@ -79,15 +79,15 @@
             localStorage.setItem('clickCount', clickCount);
         });
 
-        function showUpgrades() {
+        document.getElementById('upgradesButton').addEventListener('click', () => {
             document.getElementById('content').innerHTML = `<button onclick="improve()">Improve: ${getUpgradeCost()}</button>`;
-        }
+        });
 
-        function showQuests() {
+        document.getElementById('questsButton').addEventListener('click', () => {
             document.getElementById('content').innerHTML = 'Coming soon';
-        }
+        });
 
-        function showStats() {
+        document.getElementById('statsButton').addEventListener('click', () => {
             document.getElementById('content').innerHTML = `
                 <div>achievement: 100 ${clickCount >= 100 ? '☑️' : ''}</div>
                 <div>achievement: 1000 ${clickCount >= 1000 ? '☑️' : ''}</div>
@@ -95,15 +95,15 @@
                 <div>achievement: 100000 ${clickCount >= 100000 ? '☑️' : ''}</div>
                 <div>achievement: 1000000 ${clickCount >= 1000000 ? '☑️' : ''}</div>
                 <div>achievement: 10000000 ${clickCount >= 10000000 ? '☑️' : ''}</div>`;
-        }
+        });
 
-        function showAbout() {
+        document.getElementById('aboutButton').addEventListener('click', () => {
             document.getElementById('content').innerHTML = `
                 <h2>About RocketTap</h2>
                 <p>RocketTap is an engaging clicker game where players tap a rocket to earn clicks and coins. The game features.</p>
                 <p>RocketTap is a unique project created for all fans of clicker games. The main goal of the game is to tap on a rocket to earn clicks and coins. Players can enhance their abilities, complete daily tasks, earn rewards, and reach new heights in the game.</p>
                 <p>Join us and start your space adventure with RocketTap!</p>`;
-        }
+        });
 
         function improve() {
             const cost = getUpgradeCost();
