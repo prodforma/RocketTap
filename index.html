@@ -10,7 +10,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             height: 100vh;
             background-color: black;
             color: white;
@@ -19,8 +19,8 @@
         }
 
         h1 {
-            margin-top: 150px;
-            font-size: 48px;
+            margin-top: 20px;
+            font-size: 36px;
         }
 
         #click-count {
@@ -30,22 +30,23 @@
         }
 
         #rocket {
-            width: 250px;
-            height: 250px;
-            margin-top: 150px;
+            width: 150px;
+            height: 150px;
+            margin-top: 50px;
             cursor: pointer;
             user-select: none; /* Prevents element selection */
         }
 
         #button-container {
             display: flex;
+            justify-content: center;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         button {
             padding: 10px 20px;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         #content {
@@ -59,7 +60,7 @@
     <h1>RocketTap</h1>
     <div id="click-count">0</div>
     <img id="rocket" src="image-removebg-preview2.png" alt="Rocket">
-    <div id="button-container" style="margin-top: 720px;">
+    <div id="button-container">
         <button id="upgradesButton">Upgrades</button>
         <button id="questsButton">Quests</button>
         <button id="statsButton">Stats</button>
